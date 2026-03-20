@@ -2,9 +2,14 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const pathname = usePathname();
+  const isHome = pathname === "/";
+
+  const homeLink = (hash: string) => (isHome ? hash : `/${hash}`);
 
   return (
     <nav className="bg-gray-900 text-white sticky top-0 z-50 shadow-lg">
@@ -17,17 +22,20 @@ export default function Navbar() {
             ThermalPrint
           </Link>
 
-          <div className="hidden md:flex items-center gap-8 text-sm font-medium">
-            <a href="#categories" className="text-gray-300 hover:text-white transition-colors">
+          <div className="hidden md:flex items-center gap-6 text-sm font-medium">
+            <a href={homeLink("#categories")} className="text-gray-300 hover:text-white transition-colors">
               Danh Mục
             </a>
-            <a href="#products" className="text-gray-300 hover:text-white transition-colors">
+            <Link
+              href="/products"
+              className={`transition-colors ${pathname === "/products" ? "text-blue-400" : "text-gray-300 hover:text-white"}`}
+            >
               Sản Phẩm
-            </a>
-            <a href="#features" className="text-gray-300 hover:text-white transition-colors">
+            </Link>
+            <a href={homeLink("#features")} className="text-gray-300 hover:text-white transition-colors">
               Tính Năng
             </a>
-            <a href="#contact" className="text-gray-300 hover:text-white transition-colors">
+            <a href={homeLink("#contact")} className="text-gray-300 hover:text-white transition-colors">
               Liên Hệ
             </a>
             <a
@@ -56,16 +64,16 @@ export default function Navbar() {
 
         {menuOpen && (
           <div className="md:hidden py-4 border-t border-gray-700 flex flex-col gap-4 text-sm font-medium">
-            <a href="#categories" className="text-gray-300 hover:text-white" onClick={() => setMenuOpen(false)}>
+            <a href={homeLink("#categories")} className="text-gray-300 hover:text-white" onClick={() => setMenuOpen(false)}>
               Danh Mục
             </a>
-            <a href="#products" className="text-gray-300 hover:text-white" onClick={() => setMenuOpen(false)}>
+            <Link href="/products" className="text-gray-300 hover:text-white" onClick={() => setMenuOpen(false)}>
               Sản Phẩm
-            </a>
-            <a href="#features" className="text-gray-300 hover:text-white" onClick={() => setMenuOpen(false)}>
+            </Link>
+            <a href={homeLink("#features")} className="text-gray-300 hover:text-white" onClick={() => setMenuOpen(false)}>
               Tính Năng
             </a>
-            <a href="#contact" className="text-gray-300 hover:text-white" onClick={() => setMenuOpen(false)}>
+            <a href={homeLink("#contact")} className="text-gray-300 hover:text-white" onClick={() => setMenuOpen(false)}>
               Liên Hệ
             </a>
             <a href="tel:0909123456" className="bg-blue-600 text-white px-4 py-2 rounded-lg text-center">

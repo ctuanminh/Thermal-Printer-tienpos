@@ -117,10 +117,10 @@ export default function Products() {
 
         <div className="text-center mt-10">
           <a
-            href="#contact"
+            href="/products"
             className="inline-flex items-center gap-2 border-2 border-blue-600 text-blue-600 hover:bg-blue-50 font-semibold px-8 py-3 rounded-lg transition-colors"
           >
-            Xem Thêm Sản Phẩm
+            Xem Tất Cả Sản Phẩm
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
             </svg>
