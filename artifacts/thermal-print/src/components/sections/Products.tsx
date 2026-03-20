@@ -1,123 +1,130 @@
-import { motion } from "framer-motion";
-import { formatCurrency } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-
 const products = [
   {
     id: 1,
     name: "Máy In Hóa Đơn EPSON TM-T82",
-    price: 2850000,
-    category: "Máy In Hóa Đơn",
-    desc: "Tốc độ in nhanh 200mm/s, độ bền bỉ cao, phù hợp siêu thị, nhà hàng.",
-    image: `${import.meta.env.BASE_URL}images/prod-epson.png`,
-    featured: true,
+    description: "Tốc độ in cao 200mm/s, độ phân giải 180dpi, kết nối USB + Serial + Ethernet",
+    price: "2.850.000 VNĐ",
+    brand: "EPSON",
+    category: "Máy In Nhiệt",
+    badge: "Bán Chạy",
+    badgeColor: "bg-orange-500",
+    emoji: "🖨️",
   },
   {
     id: 2,
     name: "Máy In Bill CITIZEN CT-E301",
-    price: 3200000,
-    category: "Máy In Hóa Đơn",
-    desc: "Thiết kế hiện đại vuông vức, đa kết nối USB, LAN, Serial tiện lợi.",
-    image: `${import.meta.env.BASE_URL}images/prod-citizen.png`,
+    description: "Kết nối USB, LAN, Serial. Hỗ trợ cắt giấy tự động, in logo, mã vạch QR",
+    price: "3.200.000 VNĐ",
+    brand: "CITIZEN",
+    category: "Máy In Nhiệt",
+    badge: "Mới",
+    badgeColor: "bg-green-500",
+    emoji: "🖨️",
   },
   {
     id: 3,
     name: "Máy In Nhãn ZEBRA ZD220",
-    price: 4500000,
-    category: "Máy In Mã Vạch",
-    desc: "In nhãn mã vạch chuyên nghiệp, vỏ bọc chắc chắn, dễ dàng thay mực/giấy.",
-    image: `${import.meta.env.BASE_URL}images/prod-zebra.png`,
+    description: "In nhãn mã vạch chuyên nghiệp, tốc độ 102mm/s, kết nối USB",
+    price: "4.500.000 VNĐ",
+    brand: "ZEBRA",
+    category: "Máy In Nhãn",
+    badge: "Chính Hãng",
+    badgeColor: "bg-blue-500",
+    emoji: "🏷️",
   },
   {
     id: 4,
     name: "Máy In Cầm Tay Bluetooth",
-    price: 1800000,
-    category: "Máy In Cầm Tay",
-    desc: "Nhỏ gọn di động, dung lượng pin trâu, kết nối Bluetooth với điện thoại.",
-    image: `${import.meta.env.BASE_URL}images/prod-mobile.png`,
+    description: "Di động tiện lợi, pin sạc dùng 8 giờ, kết nối Bluetooth & USB, in khổ 58mm",
+    price: "1.800.000 VNĐ",
+    brand: "Đa thương hiệu",
+    category: "Máy In Di Động",
+    badge: "",
+    badgeColor: "",
+    emoji: "📱",
   },
   {
     id: 5,
-    name: "Giấy In Nhiệt 80x80 (Hộp 10 cuộn)",
-    price: 1200000,
+    name: "Giấy In Nhiệt 80mm x 80m",
+    description: "Hộp 10 cuộn, chống ẩm tốt, phù hợp máy in hóa đơn 80mm mọi thương hiệu",
+    price: "120.000 VNĐ / hộp",
+    brand: "Đa thương hiệu",
     category: "Giấy In Nhiệt",
-    desc: "Giấy OJI chất lượng cao, lõi nhựa nhỏ không bụi, bảo vệ tuổi thọ đầu in.",
-    image: `${import.meta.env.BASE_URL}images/prod-roll80.png`,
+    badge: "Tiết Kiệm",
+    badgeColor: "bg-teal-500",
+    emoji: "📄",
   },
   {
     id: 6,
-    name: "Cuộn Tem Nhãn 35x22mm (3 tem/hàng)",
-    price: 85000,
-    category: "Giấy Tem Nhãn",
-    desc: "Decal nhiệt bám dính tốt, in sắc nét không phai, cuộn dài 50 mét.",
-    image: `${import.meta.env.BASE_URL}images/prod-label.png`,
-  }
+    name: "Giấy In Nhiệt 57mm x 50m",
+    description: "Hộp 20 cuộn, dùng cho máy in POS, máy tính tiền, ATM, màu trắng sáng",
+    price: "130.000 VNĐ / hộp",
+    brand: "Đa thương hiệu",
+    category: "Giấy In Nhiệt",
+    badge: "",
+    badgeColor: "",
+    emoji: "📄",
+  },
 ];
 
-export function Products() {
+export default function Products() {
   return (
-    <section id="products" className="py-24 bg-secondary/30">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
-          <div className="max-w-2xl">
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground mb-4">Sản Phẩm Nổi Bật</h2>
-            <div className="w-20 h-1 bg-primary rounded-full mb-6" />
-            <p className="text-muted-foreground text-lg">
-              Các dòng sản phẩm bán chạy nhất được nhiều doanh nghiệp tin dùng nhờ độ ổn định và chi phí hợp lý.
-            </p>
-          </div>
-          <Button variant="outline" className="hidden md:inline-flex">
-            Xem Tất Cả Sản Phẩm
-          </Button>
+    <section id="products" className="py-20 bg-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-14">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Sản Phẩm Nổi Bật</h2>
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            Các thiết bị và vật tư in nhiệt chất lượng cao từ những thương hiệu uy tín nhất thị trường
+          </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {products.map((product, idx) => (
-            <motion.div
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {products.map((product) => (
+            <div
               key={product.id}
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: idx * 0.1 }}
+              className="bg-white border border-gray-200 rounded-2xl overflow-hidden hover:shadow-lg hover:border-blue-200 transition-all duration-200 group"
             >
-              <Card className="h-full flex flex-col group">
-                <div className="relative aspect-square overflow-hidden bg-white p-6">
-                  {product.featured && (
-                    <Badge className="absolute top-4 left-4 z-10 bg-accent text-white no-default-hover-elevate">
-                      Bán chạy
-                    </Badge>
-                  )}
-                  <img 
-                    src={product.image} 
-                    alt={product.name} 
-                    className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="bg-gradient-to-br from-gray-50 to-blue-50 p-8 flex items-center justify-center relative">
+                <span className="text-7xl">{product.emoji}</span>
+                {product.badge && (
+                  <span className={`absolute top-3 right-3 ${product.badgeColor} text-white text-xs font-bold px-2.5 py-1 rounded-full`}>
+                    {product.badge}
+                  </span>
+                )}
+              </div>
+
+              <div className="p-5">
+                <div className="text-xs text-blue-600 font-semibold uppercase tracking-wider mb-1">
+                  {product.category} · {product.brand}
                 </div>
-                <CardHeader className="flex-1">
-                  <div className="text-xs font-semibold text-primary mb-2 uppercase tracking-wider">{product.category}</div>
-                  <CardTitle className="text-lg mb-2 line-clamp-2">{product.name}</CardTitle>
-                  <CardDescription className="line-clamp-2">{product.desc}</CardDescription>
-                </CardHeader>
-                <CardFooter className="flex items-center justify-between border-t border-border/50 pt-6">
-                  <div className="font-display font-bold text-xl text-foreground">
-                    {formatCurrency(product.price)}
-                  </div>
-                  <a href="#contact">
-                    <Button size="sm">Liên Hệ</Button>
+                <h3 className="font-bold text-gray-900 text-base mb-2 group-hover:text-blue-700 transition-colors">
+                  {product.name}
+                </h3>
+                <p className="text-sm text-gray-500 mb-4 leading-relaxed">{product.description}</p>
+                <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+                  <span className="text-lg font-bold text-blue-700">{product.price}</span>
+                  <a
+                    href="#contact"
+                    className="bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors"
+                  >
+                    Liên Hệ
                   </a>
-                </CardFooter>
-              </Card>
-            </motion.div>
+                </div>
+              </div>
+            </div>
           ))}
         </div>
-        
-        <div className="mt-10 text-center md:hidden">
-          <Button variant="outline" className="w-full">
-            Xem Tất Cả Sản Phẩm
-          </Button>
+
+        <div className="text-center mt-10">
+          <a
+            href="#contact"
+            className="inline-flex items-center gap-2 border-2 border-blue-600 text-blue-600 hover:bg-blue-50 font-semibold px-8 py-3 rounded-lg transition-colors"
+          >
+            Xem Thêm Sản Phẩm
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </a>
         </div>
       </div>
     </section>

@@ -50,6 +50,25 @@ Every package extends `tsconfig.base.json` which sets `composite: true`. The roo
 
 ## Packages
 
+### `artifacts/thermal-print` (`@workspace/thermal-print`)
+
+Product showcase website for thermal printers and thermal paper (Vietnamese language). Built with Next.js 15 + Payload CMS 3.0 + Tailwind CSS 3.
+
+- **Framework**: Next.js 15 (App Router)
+- **CMS**: Payload CMS 3.0 with PostgreSQL adapter
+- **Styling**: Tailwind CSS 3 + PostCSS
+- **Language**: Vietnamese
+- Entry: `src/app/layout.tsx` — root layout
+- Public pages: `src/app/(app)/` — product showcase website
+- Admin panel: `src/app/(payload)/admin/` — Payload CMS admin at `/admin`
+- API routes: `src/app/api/[...slug]/` — Payload REST API
+- Collections: `src/collections/` — Users, Products, Categories, Media
+- Config: `src/payload.config.ts` — Payload CMS configuration
+- `pnpm --filter @workspace/thermal-print run dev` — dev server (Next.js on port 22646)
+- `pnpm --filter @workspace/thermal-print run build` — production build
+- `pnpm --filter @workspace/thermal-print run start` — production server
+- **PAYLOAD_SECRET** env var should be set for production
+
 ### `artifacts/api-server` (`@workspace/api-server`)
 
 Express 5 API server. Routes live in `src/routes/` and use `@workspace/api-zod` for request and response validation and `@workspace/db` for persistence.

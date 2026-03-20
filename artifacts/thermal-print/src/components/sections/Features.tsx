@@ -1,63 +1,63 @@
-import { motion } from "framer-motion";
-import { Zap, ShieldCheck, Headset, Truck } from "lucide-react";
+const features = [
+  {
+    icon: "⚡",
+    title: "Tốc Độ In Cao",
+    description:
+      "Công nghệ in nhiệt tiên tiến cho tốc độ lên đến 250mm/s, đảm bảo in hóa đơn nhanh chóng ngay cả giờ cao điểm.",
+  },
+  {
+    icon: "🔧",
+    title: "Bền Bỉ & Ổn Định",
+    description:
+      "Thiết bị chính hãng với tuổi thọ cao, giảm thiểu sự cố, tiết kiệm chi phí bảo trì cho doanh nghiệp.",
+  },
+  {
+    icon: "🛡️",
+    title: "Bảo Hành Chính Hãng",
+    description:
+      "Cam kết bảo hành 12-24 tháng theo chính sách nhà sản xuất, hỗ trợ đổi mới khi phát sinh lỗi kỹ thuật.",
+  },
+  {
+    icon: "📞",
+    title: "Hỗ Trợ Kỹ Thuật 24/7",
+    description:
+      "Đội ngũ kỹ thuật viên chuyên nghiệp, hỗ trợ qua điện thoại, Zalo, email mọi lúc bạn cần.",
+  },
+  {
+    icon: "🚚",
+    title: "Giao Hàng Toàn Quốc",
+    description:
+      "Giao hàng nhanh trên toàn quốc, đóng gói cẩn thận, có bảo hiểm hàng hóa trong quá trình vận chuyển.",
+  },
+  {
+    icon: "💰",
+    title: "Giá Cả Cạnh Tranh",
+    description:
+      "Nhập khẩu trực tiếp từ nhà sản xuất, không qua trung gian, giá luôn tốt nhất thị trường, chiết khấu cao cho đại lý.",
+  },
+];
 
-export function Features() {
-  const features = [
-    {
-      icon: Zap,
-      title: "Tốc Độ Vượt Trội",
-      desc: "Thiết bị được trang bị cấu hình cao, cho phép in hàng ngàn hóa đơn, tem nhãn mỗi ngày không gián đoạn."
-    },
-    {
-      icon: ShieldCheck,
-      title: "Bền Bỉ Dài Lâu",
-      desc: "Đầu in siêu bền, chống mài mòn. Khung máy thiết kế chống va đập, hoạt động tốt trong môi trường khắc nghiệt."
-    },
-    {
-      icon: Headset,
-      title: "Hỗ Trợ 24/7",
-      desc: "Đội ngũ kỹ thuật viên am hiểu sâu sắc về máy in, sẵn sàng hỗ trợ cài đặt, xử lý sự cố từ xa nhanh chóng."
-    },
-    {
-      icon: Truck,
-      title: "Giao Hàng Tận Nơi",
-      desc: "Hệ thống kho hàng rộng khắp, đảm bảo vật tư giấy in luôn sẵn sàng và giao hỏa tốc đến doanh nghiệp bạn."
-    }
-  ];
-
+export default function Features() {
   return (
-    <section id="features" className="py-24 bg-foreground text-white relative overflow-hidden">
-      {/* Decorative BG */}
-      <div className="absolute top-0 right-0 -mr-64 -mt-64 w-[600px] h-[600px] rounded-full bg-primary/10 blur-[100px]" />
-      <div className="absolute bottom-0 left-0 -ml-64 -mb-64 w-[600px] h-[600px] rounded-full bg-accent/10 blur-[100px]" />
-
-      <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">Tại Sao Chọn Chúng Tôi?</h2>
-          <div className="w-20 h-1 bg-primary mx-auto rounded-full mb-6" />
-          <p className="text-white/70 text-lg">
-            Hơn 5 năm kinh nghiệm, cung cấp giải pháp cho hơn 10.000 cửa hàng bán lẻ, nhà kho trên toàn quốc.
+    <section id="features" className="py-20 bg-gradient-to-br from-blue-950 to-gray-900 text-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-14">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Tại Sao Chọn Chúng Tôi?</h2>
+          <p className="text-lg text-blue-200 max-w-2xl mx-auto">
+            Hơn 10 năm kinh nghiệm trong ngành in nhiệt, chúng tôi hiểu rõ nhu cầu của từng doanh nghiệp
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {features.map((feat, idx) => (
-            <motion.div
-              key={feat.title}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: idx * 0.15 }}
-              className="bg-white/5 border border-white/10 rounded-2xl p-8 hover:bg-white/10 transition-colors duration-300"
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {features.map((feature, i) => (
+            <div
+              key={i}
+              className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-white/10 hover:border-blue-400/30 transition-all duration-200"
             >
-              <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center mb-6 shadow-lg">
-                <feat.icon className="w-7 h-7 text-white" />
-              </div>
-              <h3 className="text-xl font-bold font-display mb-3">{feat.title}</h3>
-              <p className="text-white/60 leading-relaxed text-sm">
-                {feat.desc}
-              </p>
-            </motion.div>
+              <div className="text-4xl mb-4">{feature.icon}</div>
+              <h3 className="text-lg font-bold text-white mb-2">{feature.title}</h3>
+              <p className="text-blue-200 text-sm leading-relaxed">{feature.description}</p>
+            </div>
           ))}
         </div>
       </div>

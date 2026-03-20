@@ -1,184 +1,191 @@
+"use client";
+
 import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { motion } from "framer-motion";
-import { MapPin, Phone, Mail, Clock, Send, CheckCircle2 } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 
-const contactSchema = z.object({
-  name: z.string().min(2, "Vui lòng nhập tên của bạn"),
-  phone: z.string().min(10, "Số điện thoại không hợp lệ"),
-  email: z.string().email("Email không hợp lệ").optional().or(z.literal("")),
-  message: z.string().min(10, "Vui lòng nhập nội dung yêu cầu chi tiết hơn"),
-});
-
-type ContactFormValues = z.infer<typeof contactSchema>;
-
-export function Contact() {
-  const { toast } = useToast();
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
-
-  const form = useForm<ContactFormValues>({
-    resolver: zodResolver(contactSchema),
-    defaultValues: { name: "", phone: "", email: "", message: "" },
+export default function Contact() {
+  const [formData, setFormData] = useState({
+    name: "",
+    phone: "",
+    email: "",
+    product: "",
+    message: "",
   });
+  const [submitted, setSubmitted] = useState(false);
 
-  const onSubmit = async (data: ContactFormValues) => {
-    setIsSubmitting(true);
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    setIsSubmitting(false);
-    setIsSuccess(true);
-    
-    toast({
-      title: "Đã gửi yêu cầu thành công!",
-      description: "Chúng tôi sẽ liên hệ với bạn trong thời gian sớm nhất.",
-    });
-    
-    form.reset();
-    setTimeout(() => setIsSuccess(false), 5000);
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setSubmitted(true);
   };
 
-  const contactInfo = [
-    { icon: MapPin, title: "Địa chỉ", detail: "123 Đường Nguyễn Văn Cừ, Quận 5, TP.HCM" },
-    { icon: Phone, title: "Điện thoại", detail: "0909 123 456 (Zalo/Zalo OA)" },
-    { icon: Mail, title: "Email", detail: "info@mayinnhiet.vn" },
-    { icon: Clock, title: "Giờ làm việc", detail: "8:00 - 18:00, Thứ 2 đến Thứ 7" },
-  ];
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
 
   return (
-    <section id="contact" className="py-24 bg-background">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-        <div className="grid lg:grid-cols-2 gap-16 items-start">
-          
-          {/* Info Side */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground mb-4">Liên Hệ Đặt Hàng</h2>
-            <div className="w-20 h-1 bg-primary rounded-full mb-8" />
-            <p className="text-muted-foreground text-lg mb-12">
-              Quý khách cần tư vấn lắp đặt hệ thống máy in, hoặc báo giá sỉ cho vật tư giấy in? Hãy để lại thông tin, đội ngũ của chúng tôi sẽ gọi lại ngay!
-            </p>
+    <section id="contact" className="py-20 bg-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-14">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Liên Hệ & Báo Giá</h2>
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            Để lại thông tin để nhận tư vấn miễn phí và báo giá tốt nhất từ đội ngũ chuyên gia của chúng tôi
+          </p>
+        </div>
 
-            <div className="space-y-8">
-              {contactInfo.map((info, idx) => (
-                <div key={idx} className="flex items-start gap-5">
-                  <div className="w-12 h-12 rounded-full bg-secondary flex items-center justify-center shrink-0">
-                    <info.icon className="w-6 h-6 text-primary" />
-                  </div>
+        <div className="grid lg:grid-cols-2 gap-12">
+          <div>
+            <div className="space-y-6">
+              {[
+                {
+                  icon: "📍",
+                  title: "Địa Chỉ",
+                  content: "123 Đường Nguyễn Văn Cừ, Quận 5, TP. Hồ Chí Minh",
+                },
+                {
+                  icon: "📞",
+                  title: "Điện Thoại",
+                  content: "0909 123 456",
+                  href: "tel:0909123456",
+                },
+                {
+                  icon: "✉️",
+                  title: "Email",
+                  content: "info@thermalprint.vn",
+                  href: "mailto:info@thermalprint.vn",
+                },
+                {
+                  icon: "🕐",
+                  title: "Giờ Làm Việc",
+                  content: "Thứ 2 - Thứ 7: 8:00 - 18:00",
+                },
+              ].map((item, i) => (
+                <div key={i} className="flex items-start gap-4 p-5 bg-gray-50 rounded-xl">
+                  <span className="text-2xl flex-shrink-0">{item.icon}</span>
                   <div>
-                    <h4 className="font-semibold text-foreground mb-1">{info.title}</h4>
-                    <p className="text-muted-foreground">{info.detail}</p>
+                    <div className="font-semibold text-gray-900 mb-0.5">{item.title}</div>
+                    {item.href ? (
+                      <a href={item.href} className="text-blue-600 hover:underline">
+                        {item.content}
+                      </a>
+                    ) : (
+                      <div className="text-gray-600">{item.content}</div>
+                    )}
                   </div>
                 </div>
               ))}
             </div>
-          </motion.div>
 
-          {/* Form Side */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="bg-card border border-border/50 rounded-3xl p-8 md:p-10 shadow-xl shadow-black/5 relative overflow-hidden"
-          >
-            {isSuccess ? (
-              <div className="absolute inset-0 bg-card z-10 flex flex-col items-center justify-center text-center p-8">
-                <motion.div
-                  initial={{ scale: 0.8, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mb-6"
-                >
-                  <CheckCircle2 className="w-10 h-10 text-green-600" />
-                </motion.div>
-                <h3 className="text-2xl font-bold font-display text-foreground mb-2">Đã Gửi Thành Công!</h3>
-                <p className="text-muted-foreground">Cảm ơn bạn đã quan tâm. Chuyên viên tư vấn sẽ liên hệ sớm nhất.</p>
-                <Button 
-                  className="mt-8" 
-                  variant="outline"
-                  onClick={() => setIsSuccess(false)}
+            <div className="mt-8 p-6 bg-blue-50 border border-blue-100 rounded-xl">
+              <h3 className="font-bold text-blue-900 mb-2">🎁 Ưu Đãi Đặc Biệt</h3>
+              <ul className="space-y-1.5 text-sm text-blue-800">
+                <li>✓ Miễn phí lắp đặt và cài đặt tại TP.HCM</li>
+                <li>✓ Tặng cuộn giấy dùng thử khi mua máy in</li>
+                <li>✓ Chiết khấu 5-15% cho đơn hàng số lượng lớn</li>
+                <li>✓ Bảo hành tận nơi trong vòng 12 tháng</li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="bg-gray-50 rounded-2xl p-8 border border-gray-200">
+            {submitted ? (
+              <div className="text-center py-12">
+                <div className="text-6xl mb-4">✅</div>
+                <h3 className="text-xl font-bold text-gray-900 mb-2">Đã gửi thành công!</h3>
+                <p className="text-gray-600">
+                  Cảm ơn bạn đã liên hệ. Chúng tôi sẽ phản hồi trong vòng 30 phút.
+                </p>
+                <button
+                  onClick={() => setSubmitted(false)}
+                  className="mt-6 text-blue-600 font-semibold hover:underline"
                 >
                   Gửi yêu cầu khác
-                </Button>
+                </button>
               </div>
-            ) : null}
+            ) : (
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <h3 className="text-lg font-bold text-gray-900 mb-4">Gửi Yêu Cầu Tư Vấn</h3>
 
-            <h3 className="text-2xl font-bold font-display mb-6">Gửi Yêu Cầu Tư Vấn</h3>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-              
-              <div>
-                <label className="block text-sm font-medium mb-2">Họ và Tên *</label>
-                <Input 
-                  placeholder="Nhập tên của bạn" 
-                  {...form.register("name")}
-                  className={form.formState.errors.name ? "border-destructive" : ""}
-                />
-                {form.formState.errors.name && (
-                  <p className="text-destructive text-sm mt-1.5">{form.formState.errors.name.message}</p>
-                )}
-              </div>
-
-              <div className="grid sm:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-sm font-medium mb-2">Số Điện Thoại *</label>
-                  <Input 
-                    placeholder="090..." 
-                    {...form.register("phone")}
-                    className={form.formState.errors.phone ? "border-destructive" : ""}
-                  />
-                  {form.formState.errors.phone && (
-                    <p className="text-destructive text-sm mt-1.5">{form.formState.errors.phone.message}</p>
-                  )}
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Họ Tên *</label>
+                    <input
+                      type="text"
+                      name="name"
+                      required
+                      value={formData.name}
+                      onChange={handleChange}
+                      placeholder="Nguyễn Văn A"
+                      className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Điện Thoại *</label>
+                    <input
+                      type="tel"
+                      name="phone"
+                      required
+                      value={formData.phone}
+                      onChange={handleChange}
+                      placeholder="0909 123 456"
+                      className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                    />
+                  </div>
                 </div>
+
                 <div>
-                  <label className="block text-sm font-medium mb-2">Email (Tùy chọn)</label>
-                  <Input 
-                    placeholder="email@example.com" 
-                    {...form.register("email")}
-                    className={form.formState.errors.email ? "border-destructive" : ""}
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                  <input
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    placeholder="example@email.com"
+                    className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
                   />
-                  {form.formState.errors.email && (
-                    <p className="text-destructive text-sm mt-1.5">{form.formState.errors.email.message}</p>
-                  )}
                 </div>
-              </div>
 
-              <div>
-                <label className="block text-sm font-medium mb-2">Nội dung yêu cầu *</label>
-                <Textarea 
-                  placeholder="Bạn cần tư vấn máy in loại nào? Hay số lượng giấy in cần lấy?" 
-                  {...form.register("message")}
-                  className={form.formState.errors.message ? "border-destructive" : ""}
-                />
-                {form.formState.errors.message && (
-                  <p className="text-destructive text-sm mt-1.5">{form.formState.errors.message.message}</p>
-                )}
-              </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Sản Phẩm Quan Tâm</label>
+                  <select
+                    name="product"
+                    value={formData.product}
+                    onChange={handleChange}
+                    className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm bg-white"
+                  >
+                    <option value="">-- Chọn sản phẩm --</option>
+                    <option value="may-in-hoa-don">Máy In Hóa Đơn</option>
+                    <option value="may-in-nhan">Máy In Nhãn Mã Vạch</option>
+                    <option value="may-in-cam-tay">Máy In Cầm Tay</option>
+                    <option value="giay-in-nhiet">Giấy In Nhiệt</option>
+                    <option value="phu-kien">Phụ Kiện</option>
+                    <option value="khac">Khác</option>
+                  </select>
+                </div>
 
-              <Button 
-                type="submit" 
-                size="lg" 
-                className="w-full"
-                disabled={isSubmitting}
-              >
-                {isSubmitting ? "Đang gửi..." : (
-                  <>
-                    Gửi Thông Tin <Send className="w-4 h-4 ml-2" />
-                  </>
-                )}
-              </Button>
-            </form>
-          </motion.div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Nội Dung</label>
+                  <textarea
+                    name="message"
+                    rows={4}
+                    value={formData.message}
+                    onChange={handleChange}
+                    placeholder="Mô tả nhu cầu của bạn, số lượng cần mua..."
+                    className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm resize-none"
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg transition-colors shadow-md"
+                >
+                  Gửi Yêu Cầu Tư Vấn
+                </button>
+
+                <p className="text-xs text-gray-400 text-center">
+                  Thông tin của bạn được bảo mật tuyệt đối
+                </p>
+              </form>
+            )}
+          </div>
         </div>
       </div>
     </section>
