@@ -1,0 +1,40 @@
+packages:
+  "framer-motion": "For page transitions and scroll-triggered animations"
+  "clsx": "For conditional class names"
+  "tailwind-merge": "For merging tailwind classes safely"
+  "@hookform/resolvers": "Zod validation with react-hook-form"
+  "react-hook-form": "For the contact form"
+  "zod": "For form validation"
+
+images:
+  - path: "artifacts/thermal-print/public/images/hero-bg.png"
+    description: "Abstract modern technology background with dark navy and vibrant blue glowing lines, sleek geometric shapes, deep depth of field, premium corporate feel"
+    aspect_ratio: "16:9"
+  - path: "artifacts/thermal-print/public/images/cat-printer.png"
+    description: "Clean minimal 3D render of a modern black POS receipt thermal printer on a pristine white studio background, high-end product photography style"
+    aspect_ratio: "4:3"
+  - path: "artifacts/thermal-print/public/images/cat-paper.png"
+    description: "Clean minimal 3D render of a neat stack of white thermal paper rolls on a pristine white studio background, bright lighting, high-end product photography style"
+    aspect_ratio: "4:3"
+  - path: "artifacts/thermal-print/public/images/prod-epson.png"
+    description: "Professional retail POS receipt printer, sleek black design, isolated on clean light gray background, realistic product shot"
+    aspect_ratio: "1:1"
+  - path: "artifacts/thermal-print/public/images/prod-citizen.png"
+    description: "Cube-shaped modern retail receipt printer, dark gray matte finish, soft studio lighting, isolated on light background"
+    aspect_ratio: "1:1"
+  - path: "artifacts/thermal-print/public/images/prod-zebra.png"
+    description: "Industrial desktop barcode label printer, robust dark gray design, professional studio product shot, isolated on light background"
+    aspect_ratio: "1:1"
+  - path: "artifacts/thermal-print/public/images/prod-mobile.png"
+    description: "Handheld portable bluetooth thermal printer, small and ergonomic black design, isolated on light background"
+    aspect_ratio: "1:1"
+  - path: "artifacts/thermal-print/public/images/prod-roll80.png"
+    description: "Single large standard 80mm thermal receipt paper roll, bright white, clean studio lighting, isolated on light background"
+    aspect_ratio: "1:1"
+  - path: "artifacts/thermal-print/public/images/prod-label.png"
+    description: "Roll of blank white adhesive barcode labels for thermal printing, clean studio lighting, isolated on light background"
+    aspect_ratio: "1:1"
+
+notes:
+  - Purely static frontend showcase, no API integrations required.
+  - Forms will simulate submission with a brief delay and success toast.
