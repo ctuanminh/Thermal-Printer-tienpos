@@ -1,3 +1,7 @@
 {
-  "/(app)/bao-gia/page": "app/(app)/bao-gia/page.js"
+  "/(app)/products/[id]/page": "app/(app)/products/[id]/page.js",
+  "/(app)/bao-gia/page": "app/(app)/bao-gia/page.js",
+  "/(app)/page": "app/(app)/page.js",
+  "/(app)/products/page": "app/(app)/products/page.js",
+  "/(app)/news/page": "app/(app)/news/page.js"
 }
