@@ -47,6 +47,15 @@ type RouteHandlerConfig<Route extends AppRouteHandlerRoutes = AppRouteHandlerRou
 }
 
 
+// Validate ../../src/app/(app)/bao-gia/page.tsx
+{
+  type __IsExpected<Specific extends AppPageConfig<"/bao-gia">> = Specific
+  const handler = {} as typeof import("../../src/app/(app)/bao-gia/page.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
 // Validate ../../src/app/(app)/gio-hang/page.tsx
 {
   type __IsExpected<Specific extends AppPageConfig<"/gio-hang">> = Specific

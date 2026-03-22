@@ -43,6 +43,7 @@ export default function Navbar() {
             </a>
             {navLink("/products", "Sản Phẩm")}
             {navLink("/news", "Tin Tức")}
+            {navLink("/bao-gia", "Báo Giá")}
             <a href={homeLink("#features")} className="text-gray-300 hover:text-white transition-colors">
               Tính Năng
             </a>
@@ -103,6 +104,9 @@ export default function Navbar() {
             </Link>
             <Link href="/news" className={pathname === "/news" ? "text-blue-400" : "text-gray-300 hover:text-white"} onClick={() => setMenuOpen(false)}>
               Tin Tức
+            </Link>
+            <Link href="/bao-gia" className={pathname === "/bao-gia" ? "text-blue-400" : "text-gray-300 hover:text-white"} onClick={() => setMenuOpen(false)}>
+              Báo Giá
             </Link>
             <a href={homeLink("#features")} className="text-gray-300 hover:text-white" onClick={() => setMenuOpen(false)}>
               Tính Năng

@@ -52,6 +52,11 @@
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/(app)/products/[id]/page.js"
+    ],
+    "/(app)/bao-gia/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(app)/bao-gia/page.js"
     ]
   }
 }
