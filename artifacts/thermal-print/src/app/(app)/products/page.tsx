@@ -3,32 +3,39 @@
 import { useState, useMemo } from "react";
 import Link from "next/link";
 import { ALL_PRODUCTS, CATEGORIES, BRANDS, PRICE_RANGES, type Product } from "@/data/products";
+import { useCart } from "@/contexts/CartContext";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
+import { ShoppingCart, LayoutGrid, List, SlidersHorizontal, Check } from "lucide-react";
 
 type ViewMode = "grid" | "list";
 type SortOption = "default" | "price-asc" | "price-desc" | "name-asc";
 
-function GridIcon({ active }: { active: boolean }) {
-  return (
-    <svg className={`w-5 h-5 ${active ? "text-blue-600" : "text-gray-400"}`} fill="currentColor" viewBox="0 0 24 24">
-      <path d="M3 3h7v7H3V3zm0 11h7v7H3v-7zm11-11h7v7h-7V3zm0 11h7v7h-7v-7z" />
-    </svg>
-  );
-}
+function AddToCartButton({ product }: { product: Product }) {
+  const { addToCart, items } = useCart();
+  const inCart = items.some((i) => i.product.id === product.id);
 
-function ListIcon({ active }: { active: boolean }) {
   return (
-    <svg className={`w-5 h-5 ${active ? "text-blue-600" : "text-gray-400"}`} fill="currentColor" viewBox="0 0 24 24">
-      <path d="M3 4h18v2H3V4zm0 7h18v2H3v-2zm0 7h18v2H3v-2z" />
-    </svg>
+    <Button
+      size="sm"
+      variant={inCart ? "secondary" : "default"}
+      onClick={() => addToCart(product)}
+      className="flex items-center gap-1.5"
+    >
+      {inCart ? <Check className="w-3.5 h-3.5" /> : <ShoppingCart className="w-3.5 h-3.5" />}
+      {inCart ? "Đã thêm" : "Thêm giỏ"}
+    </Button>
   );
 }
 
 function ProductCard({ product, view }: { product: Product; view: ViewMode }) {
   if (view === "list") {
     return (
-      <div className="bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-md hover:border-blue-200 transition-all duration-200 flex gap-0">
-        <div className="bg-gradient-to-br from-gray-50 to-blue-50 flex items-center justify-center flex-shrink-0 w-40 relative">
-          <span className="text-6xl">{product.emoji}</span>
+      <Card className="overflow-hidden hover:shadow-md transition-shadow duration-200 flex flex-row">
+        <div className="bg-gradient-to-br from-gray-50 to-blue-50 flex items-center justify-center flex-shrink-0 w-36 relative">
+          <span className="text-5xl">{product.emoji}</span>
           {product.badge && (
             <span className={`absolute top-2 left-2 ${product.badgeColor} text-white text-xs font-bold px-2 py-0.5 rounded-full`}>
               {product.badge}
@@ -37,40 +44,39 @@ function ProductCard({ product, view }: { product: Product; view: ViewMode }) {
         </div>
         <div className="flex-1 p-5">
           <div className="flex items-start justify-between gap-4">
-            <div className="flex-1">
-              <div className="text-xs text-blue-600 font-semibold uppercase tracking-wider mb-1">
+            <div className="flex-1 min-w-0">
+              <div className="text-xs text-primary font-semibold uppercase tracking-wider mb-1">
                 {product.category} · {product.brand}
               </div>
-              <h3 className="font-bold text-gray-900 text-base mb-1.5 hover:text-blue-700 transition-colors">
+              <h3 className="font-bold text-foreground text-base mb-1.5 leading-snug">
                 {product.name}
               </h3>
-              <p className="text-sm text-gray-500 leading-relaxed mb-3">{product.description}</p>
+              <p className="text-sm text-muted-foreground leading-relaxed mb-3">{product.description}</p>
               <div className="flex flex-wrap gap-2">
                 {product.specs.slice(0, 3).map((spec, i) => (
-                  <span key={i} className="inline-flex items-center gap-1 text-xs text-gray-600 bg-gray-100 rounded-full px-2.5 py-1">
-                    <span className="text-gray-400">{spec.label}:</span>
-                    <span className="font-medium">{spec.value}</span>
-                  </span>
+                  <Badge key={i} variant="secondary" className="text-xs font-normal">
+                    {spec.label}: {spec.value}
+                  </Badge>
                 ))}
               </div>
             </div>
-            <div className="flex-shrink-0 text-right">
-              <div className="text-xl font-bold text-blue-700 mb-3 whitespace-nowrap">{product.price}</div>
-              <a
-                href="#contact"
-                className="inline-block bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-5 py-2 rounded-lg transition-colors"
-              >
-                Liên Hệ
-              </a>
+            <div className="flex-shrink-0 text-right flex flex-col items-end gap-3">
+              <div className="text-xl font-bold text-primary whitespace-nowrap">{product.price}</div>
+              <div className="flex flex-col gap-2">
+                <AddToCartButton product={product} />
+                <Button size="sm" variant="outline" asChild>
+                  <a href="#contact">Liên Hệ</a>
+                </Button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </Card>
     );
   }
 
   return (
-    <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden hover:shadow-lg hover:border-blue-200 transition-all duration-200 group flex flex-col">
+    <Card className="flex flex-col hover:shadow-lg transition-shadow duration-200 group overflow-hidden">
       <div className="bg-gradient-to-br from-gray-50 to-blue-50 p-8 flex items-center justify-center relative">
         <span className="text-7xl">{product.emoji}</span>
         {product.badge && (
@@ -79,25 +85,23 @@ function ProductCard({ product, view }: { product: Product; view: ViewMode }) {
           </span>
         )}
       </div>
-      <div className="p-5 flex flex-col flex-1">
-        <div className="text-xs text-blue-600 font-semibold uppercase tracking-wider mb-1">
+      <CardContent className="p-5 flex-1">
+        <div className="text-xs text-primary font-semibold uppercase tracking-wider mb-1">
           {product.category} · {product.brand}
         </div>
-        <h3 className="font-bold text-gray-900 text-sm mb-2 group-hover:text-blue-700 transition-colors leading-snug">
+        <h3 className="font-bold text-foreground text-sm mb-2 group-hover:text-primary transition-colors leading-snug">
           {product.name}
         </h3>
-        <p className="text-sm text-gray-500 mb-4 leading-relaxed flex-1">{product.description}</p>
-        <div className="mt-auto pt-4 border-t border-gray-100 flex items-center justify-between">
-          <span className="text-base font-bold text-blue-700">{product.price}</span>
-          <a
-            href="#contact"
-            className="bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors"
-          >
-            Liên Hệ
-          </a>
+        <p className="text-sm text-muted-foreground mb-4 leading-relaxed">{product.description}</p>
+      </CardContent>
+      <CardFooter className="p-5 pt-0">
+        <Separator className="mb-4" />
+        <div className="flex items-center justify-between w-full gap-2">
+          <span className="text-base font-bold text-primary">{product.price}</span>
+          <AddToCartButton product={product} />
         </div>
-      </div>
-    </div>
+      </CardFooter>
+    </Card>
   );
 }
 
@@ -117,15 +121,8 @@ export default function ProductsPage() {
 
   const filtered = useMemo(() => {
     let result = [...ALL_PRODUCTS];
-
-    if (selectedCategory !== "all") {
-      result = result.filter((p) => p.category === selectedCategory);
-    }
-
-    if (selectedBrands.length > 0) {
-      result = result.filter((p) => selectedBrands.includes(p.brand));
-    }
-
+    if (selectedCategory !== "all") result = result.filter((p) => p.category === selectedCategory);
+    if (selectedBrands.length > 0) result = result.filter((p) => selectedBrands.includes(p.brand));
     if (selectedPriceRange !== "all") {
       result = result.filter((p) => {
         const n = p.priceNumber;
@@ -136,11 +133,9 @@ export default function ProductsPage() {
         return true;
       });
     }
-
     if (sortBy === "price-asc") result.sort((a, b) => a.priceNumber - b.priceNumber);
     else if (sortBy === "price-desc") result.sort((a, b) => b.priceNumber - a.priceNumber);
     else if (sortBy === "name-asc") result.sort((a, b) => a.name.localeCompare(b.name, "vi"));
-
     return result;
   }, [selectedCategory, selectedBrands, selectedPriceRange, sortBy]);
 
@@ -151,49 +146,45 @@ export default function ProductsPage() {
     setSortBy("default");
   };
 
-  const hasActiveFilters =
-    selectedCategory !== "all" || selectedBrands.length > 0 || selectedPriceRange !== "all";
+  const hasActiveFilters = selectedCategory !== "all" || selectedBrands.length > 0 || selectedPriceRange !== "all";
 
   const Sidebar = () => (
     <aside className="w-full space-y-6">
       <div className="flex items-center justify-between">
-        <h2 className="font-bold text-gray-900 text-base">Bộ Lọc</h2>
+        <h2 className="font-bold text-foreground text-base">Bộ Lọc</h2>
         {hasActiveFilters && (
-          <button
-            onClick={clearFilters}
-            className="text-xs text-blue-600 hover:text-blue-800 font-medium"
-          >
+          <button onClick={clearFilters} className="text-xs text-primary hover:text-primary/80 font-medium">
             Xóa tất cả
           </button>
         )}
       </div>
 
       <div>
-        <h3 className="text-sm font-semibold text-gray-700 uppercase tracking-wider mb-3">Danh Mục</h3>
-        <div className="space-y-1.5">
+        <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">Danh Mục</h3>
+        <div className="space-y-1">
           {CATEGORIES.map((cat) => (
             <button
               key={cat.id}
               onClick={() => setSelectedCategory(cat.id)}
               className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm transition-colors text-left ${
                 selectedCategory === cat.id
-                  ? "bg-blue-50 text-blue-700 font-semibold border border-blue-200"
-                  : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                  ? "bg-primary/10 text-primary font-semibold"
+                  : "text-muted-foreground hover:bg-muted hover:text-foreground"
               }`}
             >
               <span>{cat.name}</span>
-              <span className={`text-xs rounded-full px-2 py-0.5 ${
-                selectedCategory === cat.id ? "bg-blue-100 text-blue-700" : "bg-gray-100 text-gray-500"
-              }`}>
+              <Badge variant={selectedCategory === cat.id ? "default" : "secondary"} className="text-xs h-5">
                 {cat.count}
-              </span>
+              </Badge>
             </button>
           ))}
         </div>
       </div>
 
-      <div className="border-t border-gray-100 pt-5">
-        <h3 className="text-sm font-semibold text-gray-700 uppercase tracking-wider mb-3">Thương Hiệu</h3>
+      <Separator />
+
+      <div>
+        <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">Thương Hiệu</h3>
         <div className="space-y-2">
           {BRANDS.map((brand) => (
             <label key={brand} className="flex items-center gap-2.5 cursor-pointer group">
@@ -201,11 +192,9 @@ export default function ProductsPage() {
                 type="checkbox"
                 checked={selectedBrands.includes(brand)}
                 onChange={() => toggleBrand(brand)}
-                className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                className="w-4 h-4 text-primary border-border rounded focus:ring-ring"
               />
-              <span className={`text-sm transition-colors ${
-                selectedBrands.includes(brand) ? "text-blue-700 font-medium" : "text-gray-600 group-hover:text-gray-900"
-              }`}>
+              <span className={`text-sm transition-colors ${selectedBrands.includes(brand) ? "text-primary font-medium" : "text-muted-foreground group-hover:text-foreground"}`}>
                 {brand}
               </span>
             </label>
@@ -213,25 +202,25 @@ export default function ProductsPage() {
         </div>
       </div>
 
-      <div className="border-t border-gray-100 pt-5">
-        <h3 className="text-sm font-semibold text-gray-700 uppercase tracking-wider mb-3">Mức Giá</h3>
-        <div className="space-y-1.5">
+      <Separator />
+
+      <div>
+        <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">Mức Giá</h3>
+        <div className="space-y-1">
           {PRICE_RANGES.map((range) => (
             <button
               key={range.id}
               onClick={() => setSelectedPriceRange(range.id)}
               className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm transition-colors text-left ${
                 selectedPriceRange === range.id
-                  ? "bg-blue-50 text-blue-700 font-semibold border border-blue-200"
-                  : "text-gray-600 hover:bg-gray-50"
+                  ? "bg-primary/10 text-primary font-semibold"
+                  : "text-muted-foreground hover:bg-muted"
               }`}
             >
               <span className={`w-4 h-4 rounded-full border-2 flex-shrink-0 flex items-center justify-center ${
-                selectedPriceRange === range.id ? "border-blue-600" : "border-gray-300"
+                selectedPriceRange === range.id ? "border-primary" : "border-border"
               }`}>
-                {selectedPriceRange === range.id && (
-                  <span className="w-2 h-2 rounded-full bg-blue-600" />
-                )}
+                {selectedPriceRange === range.id && <span className="w-2 h-2 rounded-full bg-primary" />}
               </span>
               {range.label}
             </button>
@@ -243,44 +232,44 @@ export default function ProductsPage() {
 
   return (
     <div className="bg-gray-50 min-h-screen">
-      <div className="bg-white border-b border-gray-200">
+      <div className="bg-white border-b border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5">
-          <div className="flex items-center gap-2 text-sm text-gray-500 mb-2">
-            <Link href="/" className="hover:text-blue-600 transition-colors">Trang chủ</Link>
+          <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
+            <Link href="/" className="hover:text-primary transition-colors">Trang chủ</Link>
             <span>/</span>
-            <span className="text-gray-900 font-medium">Sản phẩm</span>
+            <span className="text-foreground font-medium">Sản phẩm</span>
           </div>
-          <h1 className="text-2xl md:text-3xl font-bold text-gray-900">Tất Cả Sản Phẩm</h1>
+          <h1 className="text-2xl md:text-3xl font-bold text-foreground">Tất Cả Sản Phẩm</h1>
         </div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex gap-8">
           <div className="hidden lg:block w-60 flex-shrink-0">
-            <div className="bg-white rounded-xl border border-gray-200 p-5 sticky top-20">
+            <div className="bg-white rounded-xl border border-border p-5 sticky top-20">
               <Sidebar />
             </div>
           </div>
 
           <div className="flex-1 min-w-0">
-            <div className="bg-white border border-gray-200 rounded-xl px-4 py-3 mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div className="bg-white border border-border rounded-xl px-4 py-3 mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div className="flex items-center gap-3">
-                <button
-                  className="lg:hidden flex items-center gap-1.5 text-sm font-medium text-gray-700 hover:text-blue-600 border border-gray-200 rounded-lg px-3 py-1.5 transition-colors"
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="lg:hidden flex items-center gap-1.5"
                   onClick={() => setSidebarOpen(!sidebarOpen)}
                 >
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2a1 1 0 01-.293.707L13 13.414V19a1 1 0 01-.553.894l-4 2A1 1 0 017 21v-7.586L3.293 6.707A1 1 0 013 6V4z" />
-                  </svg>
+                  <SlidersHorizontal className="w-4 h-4" />
                   Bộ lọc
                   {hasActiveFilters && (
-                    <span className="bg-blue-600 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
+                    <Badge className="h-4 w-4 p-0 flex items-center justify-center text-xs">
                       {(selectedCategory !== "all" ? 1 : 0) + selectedBrands.length + (selectedPriceRange !== "all" ? 1 : 0)}
-                    </span>
+                    </Badge>
                   )}
-                </button>
-                <span className="text-sm text-gray-500">
-                  <span className="font-semibold text-gray-900">{filtered.length}</span> sản phẩm
+                </Button>
+                <span className="text-sm text-muted-foreground">
+                  <span className="font-semibold text-foreground">{filtered.length}</span> sản phẩm
                 </span>
               </div>
 
@@ -288,7 +277,7 @@ export default function ProductsPage() {
                 <select
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value as SortOption)}
-                  className="text-sm border border-gray-200 rounded-lg px-3 py-1.5 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+                  className="text-sm border border-border rounded-lg px-3 py-1.5 text-foreground bg-background focus:outline-none focus:ring-2 focus:ring-ring"
                 >
                   <option value="default">Mặc định</option>
                   <option value="price-asc">Giá tăng dần</option>
@@ -296,42 +285,29 @@ export default function ProductsPage() {
                   <option value="name-asc">Tên A-Z</option>
                 </select>
 
-                <div className="flex items-center border border-gray-200 rounded-lg overflow-hidden">
-                  <button
-                    onClick={() => setView("grid")}
-                    className={`p-2 transition-colors ${view === "grid" ? "bg-blue-50" : "hover:bg-gray-50"}`}
-                    title="Dạng lưới"
-                  >
-                    <GridIcon active={view === "grid"} />
+                <div className="flex items-center border border-border rounded-lg overflow-hidden">
+                  <button onClick={() => setView("grid")} className={`p-2 transition-colors ${view === "grid" ? "bg-primary/10 text-primary" : "text-muted-foreground hover:bg-muted"}`}>
+                    <LayoutGrid className="w-4 h-4" />
                   </button>
-                  <button
-                    onClick={() => setView("list")}
-                    className={`p-2 transition-colors ${view === "list" ? "bg-blue-50" : "hover:bg-gray-50"}`}
-                    title="Dạng danh sách"
-                  >
-                    <ListIcon active={view === "list"} />
+                  <button onClick={() => setView("list")} className={`p-2 transition-colors ${view === "list" ? "bg-primary/10 text-primary" : "text-muted-foreground hover:bg-muted"}`}>
+                    <List className="w-4 h-4" />
                   </button>
                 </div>
               </div>
             </div>
 
             {sidebarOpen && (
-              <div className="lg:hidden bg-white border border-gray-200 rounded-xl p-5 mb-6">
+              <div className="lg:hidden bg-white border border-border rounded-xl p-5 mb-6">
                 <Sidebar />
               </div>
             )}
 
             {filtered.length === 0 ? (
-              <div className="bg-white border border-gray-200 rounded-xl p-16 text-center">
+              <div className="bg-white border border-border rounded-xl p-16 text-center">
                 <div className="text-5xl mb-4">🔍</div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">Không tìm thấy sản phẩm</h3>
-                <p className="text-gray-500 mb-5">Thử thay đổi bộ lọc để xem thêm sản phẩm.</p>
-                <button
-                  onClick={clearFilters}
-                  className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2.5 rounded-lg transition-colors"
-                >
-                  Xóa bộ lọc
-                </button>
+                <h3 className="text-lg font-semibold text-foreground mb-2">Không tìm thấy sản phẩm</h3>
+                <p className="text-muted-foreground mb-5">Thử thay đổi bộ lọc để xem thêm sản phẩm.</p>
+                <Button onClick={clearFilters}>Xóa bộ lọc</Button>
               </div>
             ) : view === "grid" ? (
               <div className="grid sm:grid-cols-2 xl:grid-cols-3 gap-5">

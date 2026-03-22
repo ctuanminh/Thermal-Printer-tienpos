@@ -11,15 +11,25 @@
       "static/chunks/main-app.js",
       "static/chunks/app/(app)/layout.js"
     ],
+    "/(app)/products/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(app)/products/page.js"
+    ],
     "/(app)/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/(app)/page.js"
     ],
-    "/(app)/products/page": [
+    "/(app)/news/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/(app)/products/page.js"
+      "static/chunks/app/(app)/news/page.js"
+    ],
+    "/(app)/gio-hang/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(app)/gio-hang/page.js"
     ]
   }
 }

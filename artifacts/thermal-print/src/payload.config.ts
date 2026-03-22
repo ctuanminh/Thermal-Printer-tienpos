@@ -7,6 +7,7 @@ import { Users } from "./collections/Users";
 import { Products } from "./collections/Products";
 import { Categories } from "./collections/Categories";
 import { Media } from "./collections/Media";
+import { News } from "./collections/News";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -18,7 +19,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Products, Categories, Media],
+  collections: [Users, Products, Categories, Media, News],
   editor: lexicalEditor(),
   db: postgresAdapter({
     pool: {

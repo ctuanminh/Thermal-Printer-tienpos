@@ -3,13 +3,28 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useCart } from "@/contexts/CartContext";
+import { ShoppingCart } from "lucide-react";
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname();
   const isHome = pathname === "/";
+  const { totalItems } = useCart();
 
   const homeLink = (hash: string) => (isHome ? hash : `/${hash}`);
+
+  const navLink = (href: string, label: string) => {
+    const isActive = pathname === href;
+    return (
+      <Link
+        href={href}
+        className={`transition-colors ${isActive ? "text-blue-400 font-semibold" : "text-gray-300 hover:text-white"}`}
+      >
+        {label}
+      </Link>
+    );
+  };
 
   return (
     <nav className="bg-gray-900 text-white sticky top-0 z-50 shadow-lg">
@@ -26,18 +41,24 @@ export default function Navbar() {
             <a href={homeLink("#categories")} className="text-gray-300 hover:text-white transition-colors">
               Danh Mục
             </a>
-            <Link
-              href="/products"
-              className={`transition-colors ${pathname === "/products" ? "text-blue-400" : "text-gray-300 hover:text-white"}`}
-            >
-              Sản Phẩm
-            </Link>
+            {navLink("/products", "Sản Phẩm")}
+            {navLink("/news", "Tin Tức")}
             <a href={homeLink("#features")} className="text-gray-300 hover:text-white transition-colors">
               Tính Năng
             </a>
             <a href={homeLink("#contact")} className="text-gray-300 hover:text-white transition-colors">
               Liên Hệ
             </a>
+
+            <Link href="/gio-hang" className="relative text-gray-300 hover:text-white transition-colors">
+              <ShoppingCart className="w-5 h-5" />
+              {totalItems > 0 && (
+                <span className="absolute -top-2 -right-2 bg-blue-500 text-white text-xs font-bold w-4 h-4 rounded-full flex items-center justify-center">
+                  {totalItems > 9 ? "9+" : totalItems}
+                </span>
+              )}
+            </Link>
+
             <a
               href="tel:0909123456"
               className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors"
@@ -46,20 +67,30 @@ export default function Navbar() {
             </a>
           </div>
 
-          <button
-            className="md:hidden text-gray-300 hover:text-white"
-            onClick={() => setMenuOpen(!menuOpen)}
-          >
-            {menuOpen ? (
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            ) : (
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-            )}
-          </button>
+          <div className="flex items-center gap-3 md:hidden">
+            <Link href="/gio-hang" className="relative text-gray-300 hover:text-white">
+              <ShoppingCart className="w-5 h-5" />
+              {totalItems > 0 && (
+                <span className="absolute -top-2 -right-2 bg-blue-500 text-white text-xs font-bold w-4 h-4 rounded-full flex items-center justify-center">
+                  {totalItems}
+                </span>
+              )}
+            </Link>
+            <button
+              className="text-gray-300 hover:text-white"
+              onClick={() => setMenuOpen(!menuOpen)}
+            >
+              {menuOpen ? (
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              ) : (
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+              )}
+            </button>
+          </div>
         </div>
 
         {menuOpen && (
@@ -67,8 +98,11 @@ export default function Navbar() {
             <a href={homeLink("#categories")} className="text-gray-300 hover:text-white" onClick={() => setMenuOpen(false)}>
               Danh Mục
             </a>
-            <Link href="/products" className="text-gray-300 hover:text-white" onClick={() => setMenuOpen(false)}>
+            <Link href="/products" className={pathname === "/products" ? "text-blue-400" : "text-gray-300 hover:text-white"} onClick={() => setMenuOpen(false)}>
               Sản Phẩm
+            </Link>
+            <Link href="/news" className={pathname === "/news" ? "text-blue-400" : "text-gray-300 hover:text-white"} onClick={() => setMenuOpen(false)}>
+              Tin Tức
             </Link>
             <a href={homeLink("#features")} className="text-gray-300 hover:text-white" onClick={() => setMenuOpen(false)}>
               Tính Năng
