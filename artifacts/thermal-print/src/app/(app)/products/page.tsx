@@ -31,25 +31,29 @@ function AddToCartButton({ product }: { product: Product }) {
 }
 
 function ProductCard({ product, view }: { product: Product; view: ViewMode }) {
+  const href = `/products/${product.id}`;
+
   if (view === "list") {
     return (
       <Card className="hover:shadow-md transition-shadow duration-200 flex flex-row overflow-hidden">
-        <div className="bg-gradient-to-br from-gray-50 to-blue-50 flex items-center justify-center flex-shrink-0 w-36 relative">
+        <Link href={href} className="bg-gradient-to-br from-gray-50 to-blue-50 flex items-center justify-center flex-shrink-0 w-36 relative hover:opacity-90 transition-opacity">
           <span className="text-5xl">{product.emoji}</span>
           {product.badge && (
             <span className={`absolute top-2 left-2 ${product.badgeColor} text-white text-xs font-bold px-2 py-0.5 rounded-full`}>
               {product.badge}
             </span>
           )}
-        </div>
+        </Link>
         <div className="flex-1 p-5 flex flex-col justify-between min-w-0">
           <div>
             <div className="text-xs text-primary font-semibold uppercase tracking-wider mb-1">
               {product.category} · {product.brand}
             </div>
-            <h3 className="font-bold text-foreground text-base mb-1.5 leading-snug">
-              {product.name}
-            </h3>
+            <Link href={href}>
+              <h3 className="font-bold text-foreground text-base mb-1.5 leading-snug hover:text-primary transition-colors cursor-pointer">
+                {product.name}
+              </h3>
+            </Link>
             <p className="text-sm text-muted-foreground leading-relaxed mb-3">{product.description}</p>
             <div className="flex flex-wrap gap-2">
               {product.specs.slice(0, 3).map((spec, i) => (
@@ -64,7 +68,7 @@ function ProductCard({ product, view }: { product: Product; view: ViewMode }) {
             <div className="flex items-center gap-2 flex-shrink-0">
               <AddToCartButton product={product} />
               <Button size="sm" variant="outline" asChild>
-                <a href="#contact">Liên Hệ</a>
+                <Link href={href}>Chi tiết</Link>
               </Button>
             </div>
           </div>
@@ -75,21 +79,23 @@ function ProductCard({ product, view }: { product: Product; view: ViewMode }) {
 
   return (
     <Card className="flex flex-col hover:shadow-lg transition-shadow duration-200 group">
-      <div className="bg-gradient-to-br from-gray-50 to-blue-50 p-8 flex items-center justify-center relative rounded-t-lg overflow-hidden">
+      <Link href={href} className="bg-gradient-to-br from-gray-50 to-blue-50 p-8 flex items-center justify-center relative rounded-t-lg overflow-hidden hover:opacity-90 transition-opacity">
         <span className="text-7xl">{product.emoji}</span>
         {product.badge && (
           <span className={`absolute top-3 right-3 ${product.badgeColor} text-white text-xs font-bold px-2.5 py-1 rounded-full`}>
             {product.badge}
           </span>
         )}
-      </div>
+      </Link>
       <div className="p-5 flex flex-col flex-1">
         <div className="text-xs text-primary font-semibold uppercase tracking-wider mb-1">
           {product.category} · {product.brand}
         </div>
-        <h3 className="font-bold text-foreground text-sm mb-2 group-hover:text-primary transition-colors leading-snug">
-          {product.name}
-        </h3>
+        <Link href={href}>
+          <h3 className="font-bold text-foreground text-sm mb-2 group-hover:text-primary transition-colors leading-snug cursor-pointer">
+            {product.name}
+          </h3>
+        </Link>
         <p className="text-sm text-muted-foreground leading-relaxed flex-1">{product.description}</p>
         <div className="mt-4 pt-4 border-t border-border flex items-center justify-between gap-2">
           <span className="text-base font-bold text-primary">{product.price}</span>

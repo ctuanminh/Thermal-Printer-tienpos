@@ -10,6 +10,7 @@ export type Product = {
   badgeColor?: string;
   emoji: string;
   specs: { label: string; value: string }[];
+  promotions?: string[];
 };
 
 export type Category = {
@@ -35,6 +36,14 @@ export const ALL_PRODUCTS: Product[] = [
       { label: "Độ phân giải", value: "180dpi" },
       { label: "Kết nối", value: "USB, Serial, Ethernet" },
       { label: "Khổ giấy", value: "80mm" },
+      { label: "Cắt giấy", value: "Tự động" },
+      { label: "Bảo hành", value: "12 tháng" },
+    ],
+    promotions: [
+      "🎁 Tặng kèm 1 cuộn giấy in nhiệt 80mm x 80m",
+      "🔧 Miễn phí lắp đặt & cài đặt phần mềm",
+      "📦 Miễn phí vận chuyển nội thành",
+      "📞 Hỗ trợ kỹ thuật 24/7 trong 3 tháng đầu",
     ],
   },
   {
@@ -53,6 +62,13 @@ export const ALL_PRODUCTS: Product[] = [
       { label: "Độ phân giải", value: "203dpi" },
       { label: "Kết nối", value: "USB, LAN, Serial" },
       { label: "Khổ giấy", value: "80mm" },
+      { label: "Cắt giấy", value: "Tự động" },
+      { label: "Bảo hành", value: "12 tháng" },
+    ],
+    promotions: [
+      "🎁 Tặng kèm 2 cuộn giấy in nhiệt 80mm",
+      "📦 Miễn phí vận chuyển toàn quốc",
+      "🔧 Miễn phí cài đặt driver & phần mềm POS",
     ],
   },
   {
@@ -69,6 +85,12 @@ export const ALL_PRODUCTS: Product[] = [
       { label: "Độ phân giải", value: "180dpi" },
       { label: "Kết nối", value: "USB, Serial, Parallel" },
       { label: "Khổ giấy", value: "80mm" },
+      { label: "Cắt giấy", value: "Tự động" },
+      { label: "Bảo hành", value: "12 tháng" },
+    ],
+    promotions: [
+      "🎁 Tặng kèm 1 cuộn giấy in nhiệt 80mm x 80m",
+      "📦 Miễn phí vận chuyển nội thành TP.HCM & HN",
     ],
   },
   {
@@ -87,6 +109,14 @@ export const ALL_PRODUCTS: Product[] = [
       { label: "Độ phân giải", value: "203dpi" },
       { label: "Kết nối", value: "USB" },
       { label: "Khổ nhãn", value: "25-108mm" },
+      { label: "Loại in", value: "Nhiệt trực tiếp / Truyền nhiệt" },
+      { label: "Bảo hành", value: "12 tháng" },
+    ],
+    promotions: [
+      "🎁 Tặng kèm 1 cuộn nhãn giấy 100mm x 100mm (500 tờ)",
+      "🔧 Miễn phí cài đặt phần mềm ZPL",
+      "📦 Miễn phí vận chuyển toàn quốc",
+      "💰 Giảm 5% khi mua thêm nhãn giấy từ 5 cuộn",
     ],
   },
   {
@@ -103,6 +133,12 @@ export const ALL_PRODUCTS: Product[] = [
       { label: "Độ phân giải", value: "203dpi" },
       { label: "Kết nối", value: "USB, Serial, Parallel" },
       { label: "Khổ nhãn", value: "25-108mm" },
+      { label: "Loại in", value: "Nhiệt trực tiếp / Truyền nhiệt" },
+      { label: "Bảo hành", value: "12 tháng" },
+    ],
+    promotions: [
+      "🎁 Tặng kèm 1 cuộn ribbon wax 110mm x 300m",
+      "📦 Miễn phí vận chuyển toàn quốc",
     ],
   },
   {
@@ -121,6 +157,15 @@ export const ALL_PRODUCTS: Product[] = [
       { label: "Độ phân giải", value: "203/300dpi" },
       { label: "Kết nối", value: "USB, LAN, WiFi, Bluetooth" },
       { label: "Màn hình", value: "3.5 inch màu" },
+      { label: "Tùy chọn", value: "RFID" },
+      { label: "Bảo hành", value: "24 tháng" },
+    ],
+    promotions: [
+      "🎁 Tặng kèm 2 cuộn nhãn giấy 100mm x 100mm",
+      "🎁 Tặng kèm 1 cuộn ribbon resin 110mm x 300m",
+      "🔧 Miễn phí lắp đặt & đào tạo sử dụng",
+      "📦 Miễn phí vận chuyển toàn quốc",
+      "💰 Ưu đãi đặc biệt khi mua 2 máy trở lên",
     ],
   },
   {
@@ -137,6 +182,12 @@ export const ALL_PRODUCTS: Product[] = [
       { label: "Kết nối", value: "Bluetooth 4.0, USB" },
       { label: "Pin", value: "Li-ion 1500mAh" },
       { label: "Khổ giấy", value: "58mm" },
+      { label: "Thời lượng pin", value: "~8 giờ" },
+      { label: "Bảo hành", value: "6 tháng" },
+    ],
+    promotions: [
+      "🎁 Tặng kèm 3 cuộn giấy in nhiệt 58mm",
+      "📦 Miễn phí vận chuyển toàn quốc",
     ],
   },
   {
@@ -155,6 +206,14 @@ export const ALL_PRODUCTS: Product[] = [
       { label: "Kết nối", value: "Bluetooth, WiFi" },
       { label: "Bảo vệ", value: "IP54" },
       { label: "Khổ giấy", value: "80mm" },
+      { label: "Thời lượng pin", value: "~10 giờ" },
+      { label: "Bảo hành", value: "12 tháng" },
+    ],
+    promotions: [
+      "🎁 Tặng kèm túi đựng máy in chuyên dụng",
+      "🎁 Tặng kèm 5 cuộn giấy in nhiệt 80mm",
+      "🔧 Miễn phí cài đặt & kết nối thiết bị",
+      "📦 Miễn phí vận chuyển toàn quốc",
     ],
   },
   {
@@ -173,6 +232,12 @@ export const ALL_PRODUCTS: Product[] = [
       { label: "Số cuộn/hộp", value: "10 cuộn" },
       { label: "Nhiệt độ lưu trữ", value: "≤ 40°C" },
       { label: "Thời hạn bảo quản", value: "5 năm" },
+      { label: "Màu sắc", value: "Trắng sáng" },
+      { label: "Đơn vị", value: "Hộp 10 cuộn" },
+    ],
+    promotions: [
+      "💰 Mua 5 hộp giảm 5%, mua 10 hộp giảm 10%",
+      "📦 Miễn phí vận chuyển khi mua từ 3 hộp",
     ],
   },
   {
@@ -189,6 +254,12 @@ export const ALL_PRODUCTS: Product[] = [
       { label: "Số cuộn/hộp", value: "20 cuộn" },
       { label: "Nhiệt độ lưu trữ", value: "≤ 40°C" },
       { label: "Thời hạn bảo quản", value: "5 năm" },
+      { label: "Màu sắc", value: "Trắng sáng" },
+      { label: "Đơn vị", value: "Hộp 20 cuộn" },
+    ],
+    promotions: [
+      "💰 Mua 5 hộp giảm 5%, mua 10 hộp giảm 10%",
+      "📦 Miễn phí vận chuyển khi mua từ 3 hộp",
     ],
   },
   {
@@ -205,6 +276,12 @@ export const ALL_PRODUCTS: Product[] = [
       { label: "Số cuộn/hộp", value: "20 cuộn" },
       { label: "Nhiệt độ lưu trữ", value: "≤ 40°C" },
       { label: "Thời hạn bảo quản", value: "5 năm" },
+      { label: "Màu sắc", value: "Trắng sáng" },
+      { label: "Đơn vị", value: "Hộp 20 cuộn" },
+    ],
+    promotions: [
+      "💰 Mua 5 hộp giảm 5%, mua 10 hộp giảm 10%",
+      "📦 Miễn phí vận chuyển khi mua từ 3 hộp",
     ],
   },
   {
@@ -221,6 +298,12 @@ export const ALL_PRODUCTS: Product[] = [
       { label: "Số tờ/hộp", value: "100 tờ" },
       { label: "Loại giấy", value: "Nhiệt trực tiếp" },
       { label: "Ứng dụng", value: "Hóa đơn, phiếu giao hàng" },
+      { label: "Màu sắc", value: "Trắng" },
+      { label: "Đơn vị", value: "Hộp 100 tờ" },
+    ],
+    promotions: [
+      "💰 Mua 10 hộp giảm 8%",
+      "📦 Miễn phí vận chuyển khi mua từ 5 hộp",
     ],
   },
 ];
@@ -242,3 +325,6 @@ export const PRICE_RANGES = [
   { id: "2mto5m", label: "2.000.000 - 5.000.000 VNĐ" },
   { id: "over5m", label: "Trên 5.000.000 VNĐ" },
 ];
+
+export const ZALO_NUMBER = "0909123456";
+export const PHONE_NUMBER = "0909123456";
