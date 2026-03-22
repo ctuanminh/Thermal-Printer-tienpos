@@ -33,7 +33,7 @@ function AddToCartButton({ product }: { product: Product }) {
 function ProductCard({ product, view }: { product: Product; view: ViewMode }) {
   if (view === "list") {
     return (
-      <Card className="overflow-hidden hover:shadow-md transition-shadow duration-200 flex flex-row">
+      <Card className="hover:shadow-md transition-shadow duration-200 flex flex-row overflow-hidden">
         <div className="bg-gradient-to-br from-gray-50 to-blue-50 flex items-center justify-center flex-shrink-0 w-36 relative">
           <span className="text-5xl">{product.emoji}</span>
           {product.badge && (
@@ -42,32 +42,30 @@ function ProductCard({ product, view }: { product: Product; view: ViewMode }) {
             </span>
           )}
         </div>
-        <div className="flex-1 p-5">
-          <div className="flex items-start justify-between gap-4">
-            <div className="flex-1 min-w-0">
-              <div className="text-xs text-primary font-semibold uppercase tracking-wider mb-1">
-                {product.category} · {product.brand}
-              </div>
-              <h3 className="font-bold text-foreground text-base mb-1.5 leading-snug">
-                {product.name}
-              </h3>
-              <p className="text-sm text-muted-foreground leading-relaxed mb-3">{product.description}</p>
-              <div className="flex flex-wrap gap-2">
-                {product.specs.slice(0, 3).map((spec, i) => (
-                  <Badge key={i} variant="secondary" className="text-xs font-normal">
-                    {spec.label}: {spec.value}
-                  </Badge>
-                ))}
-              </div>
+        <div className="flex-1 p-5 flex flex-col justify-between min-w-0">
+          <div>
+            <div className="text-xs text-primary font-semibold uppercase tracking-wider mb-1">
+              {product.category} · {product.brand}
             </div>
-            <div className="flex-shrink-0 text-right flex flex-col items-end gap-3">
-              <div className="text-xl font-bold text-primary whitespace-nowrap">{product.price}</div>
-              <div className="flex flex-col gap-2">
-                <AddToCartButton product={product} />
-                <Button size="sm" variant="outline" asChild>
-                  <a href="#contact">Liên Hệ</a>
-                </Button>
-              </div>
+            <h3 className="font-bold text-foreground text-base mb-1.5 leading-snug">
+              {product.name}
+            </h3>
+            <p className="text-sm text-muted-foreground leading-relaxed mb-3">{product.description}</p>
+            <div className="flex flex-wrap gap-2">
+              {product.specs.slice(0, 3).map((spec, i) => (
+                <Badge key={i} variant="secondary" className="text-xs font-normal">
+                  {spec.label}: {spec.value}
+                </Badge>
+              ))}
+            </div>
+          </div>
+          <div className="flex items-center justify-between gap-4 mt-4 pt-4 border-t border-border">
+            <span className="text-xl font-bold text-primary whitespace-nowrap">{product.price}</span>
+            <div className="flex items-center gap-2 flex-shrink-0">
+              <AddToCartButton product={product} />
+              <Button size="sm" variant="outline" asChild>
+                <a href="#contact">Liên Hệ</a>
+              </Button>
             </div>
           </div>
         </div>
@@ -76,8 +74,8 @@ function ProductCard({ product, view }: { product: Product; view: ViewMode }) {
   }
 
   return (
-    <Card className="flex flex-col hover:shadow-lg transition-shadow duration-200 group overflow-hidden">
-      <div className="bg-gradient-to-br from-gray-50 to-blue-50 p-8 flex items-center justify-center relative">
+    <Card className="flex flex-col hover:shadow-lg transition-shadow duration-200 group">
+      <div className="bg-gradient-to-br from-gray-50 to-blue-50 p-8 flex items-center justify-center relative rounded-t-lg overflow-hidden">
         <span className="text-7xl">{product.emoji}</span>
         {product.badge && (
           <span className={`absolute top-3 right-3 ${product.badgeColor} text-white text-xs font-bold px-2.5 py-1 rounded-full`}>
@@ -85,22 +83,19 @@ function ProductCard({ product, view }: { product: Product; view: ViewMode }) {
           </span>
         )}
       </div>
-      <CardContent className="p-5 flex-1">
+      <div className="p-5 flex flex-col flex-1">
         <div className="text-xs text-primary font-semibold uppercase tracking-wider mb-1">
           {product.category} · {product.brand}
         </div>
         <h3 className="font-bold text-foreground text-sm mb-2 group-hover:text-primary transition-colors leading-snug">
           {product.name}
         </h3>
-        <p className="text-sm text-muted-foreground mb-4 leading-relaxed">{product.description}</p>
-      </CardContent>
-      <CardFooter className="p-5 pt-0">
-        <Separator className="mb-4" />
-        <div className="flex items-center justify-between w-full gap-2">
+        <p className="text-sm text-muted-foreground leading-relaxed flex-1">{product.description}</p>
+        <div className="mt-4 pt-4 border-t border-border flex items-center justify-between gap-2">
           <span className="text-base font-bold text-primary">{product.price}</span>
           <AddToCartButton product={product} />
         </div>
-      </CardFooter>
+      </div>
     </Card>
   );
 }
